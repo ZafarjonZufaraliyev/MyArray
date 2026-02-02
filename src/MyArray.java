@@ -13,12 +13,12 @@ public class MyArray {
     }
 
     public void add(int index, Integer value) {
-        if (index<0 || index>=currentIndex ){
+        if (index < 0 || index >= currentIndex) {
             System.err.println("shiftToRigthe--> ERROR");
             return;
         }
         shiftToRigthe(index);
-        values[index]=value;
+        values[index] = value;
     }
 
     public String toString() {
@@ -34,19 +34,19 @@ public class MyArray {
     }
 
     private void shiftToRigthe(int index) {
-        if (index<0 || index>=currentIndex ){
+        if (index < 0 || index >= currentIndex) {
             System.err.println("shiftToRigthe--> ERROR");
             return;
         }
         increat();
         for (int i = currentIndex; i != index; i--) {
-            values[i]=values[i-1];
+            values[i] = values[i - 1];
         }
-        values[index]=null;
+        values[index] = null;
         currentIndex++;
     }
 
-    private void increat(){
+    private void increat() {
         if (currentIndex >= values.length) {
             Integer[] newValues = new Integer[values.length * 2];
             for (int i = 0; i < values.length; i++) {
@@ -56,19 +56,40 @@ public class MyArray {
         }
     }
 
-    public void addFist(Integer value){
-        add(0,value);
+    public void addFist(Integer value) {
+        add(0, value);
     }
-    public void addList(Integer value){
+
+    public void addList(Integer value) {
         add(value);
     }
+
     ///
-    public Integer get(int index){
-        for (int i=0;i<values.length;i++){
-            if (i==index){
-                return values[i];
+    public Integer get(int index) {
+        if (index < 0 || index >= currentIndex) {
+            System.err.println("get--> ERROR");
+            return null;
+        }
+        return values[index];
+    }
+
+    public int indexOf(Integer value) {
+        if (value==null){
+            System.err.println("indexOf --> ERROR");
+        }
+        for (int i = 0; i < values.length; i++) {
+            if (value.equals(values[i])){
+                return i;
             }
         }
-        return null;
+        return -1;
+    }
+
+    public void set(int index,Integer value){
+        if (index < 0 || index >= currentIndex) {
+            System.err.println("set--> ERROR");
+            return;
+        }
+        values[index]=value;
     }
 }
