@@ -46,6 +46,18 @@ public class MyArray {
         currentIndex++;
     }
 
+    private void shiftToLift(int index) {
+        if (index < 0 || index >= currentIndex) {
+            System.err.println("shiftToRigthe--> ERROR");
+            return;
+        }
+        for (int i = index; i < currentIndex - 1; i++) {
+            values[i] = values[i + 1];
+        }
+        currentIndex--;
+        values[currentIndex] = null;
+    }
+
     private void increat() {
         if (currentIndex >= values.length) {
             Integer[] newValues = new Integer[values.length * 2];
@@ -54,6 +66,27 @@ public class MyArray {
             }
             values = newValues;
         }
+    }
+
+    ///
+    public void removeFist() {
+        remove(0);
+    }
+
+    public void removeLast() {
+        remove(currentIndex - 1);
+    }
+    public int remove(Integer value){
+        int index=indexOf(value);
+        if (index==-1){
+            return -1;
+        }
+        remove(index);
+        return index;
+    }
+    public void clear() {
+      values=new Integer[5];
+      currentIndex=0;
     }
 
     public void addFist(Integer value) {
@@ -74,22 +107,34 @@ public class MyArray {
     }
 
     public int indexOf(Integer value) {
-        if (value==null){
+        if (value == null) {
             System.err.println("indexOf --> ERROR");
         }
         for (int i = 0; i < values.length; i++) {
-            if (value.equals(values[i])){
+            if (value.equals(values[i])) {
                 return i;
             }
         }
         return -1;
     }
 
-    public void set(int index,Integer value){
+    public int set(int index, Integer value) {
         if (index < 0 || index >= currentIndex) {
             System.err.println("set--> ERROR");
-            return;
+            return -1;
         }
-        values[index]=value;
+        int oldvalue = values[index];
+        values[index] = value;
+        return oldvalue;
+    }
+
+    public Integer remove(int index) {
+        if (index < 0 || index >= currentIndex) {
+            System.err.println("shiftToRigthe--> ERROR");
+            return -1;
+        }
+        int oldvalue = values[index];
+        shiftToLift(index);
+        return oldvalue;
     }
 }
