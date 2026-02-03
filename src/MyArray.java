@@ -1,3 +1,5 @@
+import java.util.IllegalFormatCodePointException;
+
 public class MyArray {
     private Integer values[];
     private int currentIndex = 0;
@@ -76,17 +78,19 @@ public class MyArray {
     public void removeLast() {
         remove(currentIndex - 1);
     }
-    public int remove(Integer value){
-        int index=indexOf(value);
-        if (index==-1){
+
+    public int remove(Integer value) {
+        int index = indexOf(value);
+        if (index == -1) {
             return -1;
         }
         remove(index);
         return index;
     }
+
     public void clear() {
-      values=new Integer[5];
-      currentIndex=0;
+        values = new Integer[5];
+        currentIndex = 0;
     }
 
     public void addFist(Integer value) {
@@ -136,5 +140,43 @@ public class MyArray {
         int oldvalue = values[index];
         shiftToLift(index);
         return oldvalue;
+    }
+
+    public boolean isEmpty() {
+        if (currentIndex == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isContains(Integer value) {
+        int index = indexOf(value);
+        if (index != -1) {
+            return true;
+        }
+        return false;
+    }
+
+    public int size() {
+        return currentIndex;
+    }
+
+    public Object[] toArray() {
+        Object[] objexrArray = new Object[currentIndex];
+        for (int i = 0; i < currentIndex; i++) {
+            objexrArray[i] = values[i];
+        }
+        return objexrArray;
+    }
+    public void printAll(){
+        System.out.println(this.toString());
+    }
+    public void printFist(){
+        if (currentIndex==0){
+            System.out.println("Array bosh");
+        }
+        System.out.println("Fist element: "+values[0]);
+        System.out.println("Last element: "+values[currentIndex-1]);
+
     }
 }
