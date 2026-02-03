@@ -1,20 +1,21 @@
 import java.util.IllegalFormatCodePointException;
+import java.util.Iterator;
 
-public class MyArray {
-    private Integer values[];
+public class MyArray<T> implements  Iterable<T>{
+    private T[] values;
     private int currentIndex = 0;
 
     public MyArray() {
-        values = new Integer[10];
+        values = (T[]) new Object[10];
     }
 
-    public void add(Integer value) {
+    public void add(T value) {
         increat();
         values[currentIndex] = value;
         currentIndex++;
     }
 
-    public void add(int index, Integer value) {
+    public void add(int index, T value) {
         if (index < 0 || index >= currentIndex) {
             System.err.println("shiftToRigthe--> ERROR");
             return;
@@ -62,7 +63,7 @@ public class MyArray {
 
     private void increat() {
         if (currentIndex >= values.length) {
-            Integer[] newValues = new Integer[values.length * 2];
+            T[] newValues = (T[]) new Object[values.length * 2];
             for (int i = 0; i < values.length; i++) {
                 newValues[i] = values[i];
             }
@@ -89,20 +90,20 @@ public class MyArray {
     }
 
     public void clear() {
-        values = new Integer[5];
+        values = (T[]) new Object[10];
         currentIndex = 0;
     }
 
-    public void addFist(Integer value) {
+    public void addFist(T value) {
         add(0, value);
     }
 
-    public void addList(Integer value) {
+    public void addList(T value) {
         add(value);
     }
 
     ///
-    public Integer get(int index) {
+    public T get(int index) {
         if (index < 0 || index >= currentIndex) {
             System.err.println("get--> ERROR");
             return null;
@@ -122,22 +123,22 @@ public class MyArray {
         return -1;
     }
 
-    public int set(int index, Integer value) {
+    public T set(int index, T value) {
         if (index < 0 || index >= currentIndex) {
             System.err.println("set--> ERROR");
-            return -1;
+            return null;
         }
-        int oldvalue = values[index];
+        T oldvalue = values[index];
         values[index] = value;
         return oldvalue;
     }
 
-    public Integer remove(int index) {
+    public T remove(int index) {
         if (index < 0 || index >= currentIndex) {
             System.err.println("shiftToRigthe--> ERROR");
-            return -1;
+            return null;
         }
-        int oldvalue = values[index];
+        T oldvalue = values[index];
         shiftToLift(index);
         return oldvalue;
     }
@@ -178,5 +179,21 @@ public class MyArray {
         System.out.println("Fist element: "+values[0]);
         System.out.println("Last element: "+values[currentIndex-1]);
 
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private int index=0;
+            @Override
+            public boolean hasNext() {
+                return index<currentIndex;
+            }
+
+            @Override
+            public T next() {
+                return values[index++];
+            }
+        };
     }
 }
